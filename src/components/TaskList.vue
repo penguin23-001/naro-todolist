@@ -3,18 +3,22 @@ import {ref} from 'vue'
 interface Task {
     id: number
     name: string
-    completed: boolean
 }
 const Tasks = ref<Task[]>([])
+const CompletedTasks = ref<Task[]>([])
 const newTaskName = ref<string>('')
 
 const addTask = () => {
-    Tasks.value?.push({ id:Tasks.value.length , name: newTaskName.value , completed: false })
+    Tasks.value?.push({ id:Tasks.value.length , name: newTaskName.value })
     newTaskName.value = ''
 }
 
 const completeTask = (taskid: number) => {
-    Tasks.value[taskid].completed = true
+    CompletedTasks.value.push(Tasks.value[taskid])
+    Tasks.value.splice(taskid,1)
+    for(var i = 0;i<Tasks.value.length;i++){
+        Tasks.value[i].id = i
+    }
 }
 
 </script>
@@ -30,12 +34,23 @@ const completeTask = (taskid: number) => {
             追加
         </button>
     </div>
+    <div>タスク(未)</div>
     <ul>
         <li v-for="task in Tasks " :key="task.id">
             <div>
                 <button @click="completeTask(task.id)">
-                    <div v-if="!task.completed">未</div>
-                    <div v-if="task.completed">済</div>
+                    未
+                </button>
+                {{ task.name }}
+            </div>
+        </li>
+    </ul>
+    <div>タスク(済)</div>
+    <ul>
+        <li v-for="task in CompletedTasks" :key="task.id">
+            <div>
+                <button>
+                    済
                 </button>
                 {{ task.name }}
             </div>

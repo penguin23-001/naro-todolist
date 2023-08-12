@@ -10,8 +10,8 @@ defineProps<{
 
 <template>
   <div>
-    <h1>{{ msg }}</h1>
-    <ClickCounter />
+    <!-- <h1>{{ msg }}</h1> -->
+    <!-- <ClickCounter /> -->
     <!-- <ItemList /> -->
     <TaskList />
   </div>
